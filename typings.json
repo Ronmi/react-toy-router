@@ -1,6 +1,7 @@
 {
   "devDependencies": {
-    "enzyme": "registry:npm/enzyme#2.2.0+20160322031343"
+    "enzyme": "registry:npm/enzyme#2.2.0+20160322031343",
+    "lodash": "registry:npm/lodash#4.0.0+20160723033700"
   },
   "globalDevDependencies": {
     "chai": "registry:dt/chai#3.4.0+20160601211834",

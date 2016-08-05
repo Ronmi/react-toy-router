@@ -1,24 +1,14 @@
-var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 var webpack = require("webpack");
 const pkg = require("./package.json");
 module.exports = {
-  entry: {
-    bundle: "./src/main.tsx",
-    vendor: Object.keys(pkg.dependencies),
-  },
+  entry: "./src/ToyRouter.tsx",
 
   output: {
-    filename: "[name].js",
-    path: "./public/js"
+    filename: "ToyRouter.js",
+    path: "./dist"
   },
 
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "vendor",
-      filename: "vendor.js"
-    }),
-    new LodashModuleReplacementPlugin,
-    new webpack.optimize.OccurrenceOrderPlugin,
   ],
 
   // Enable sourcemaps for debugging webpack's output.
