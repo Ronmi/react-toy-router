@@ -7,20 +7,14 @@ export function normalize(path: string, base: string): string[] {
     const rooted: boolean = path[0] === "/";
     if (!rooted) path = base + path;
     let cur = 1; // current position of dest array
-    let upper_count = 0;
 
     for (let part of path.split("/")) {
         switch (part) {
         case "":
-            if (ret.length !== 0) {
-                continue;
-            }
-            break;
         case ".":
             continue;
         case "..":
-            if (cur === 1) {
-                if (!rooted) upper_count++;
+            if (cur <= 1) {
                 continue;
             }
             cur--;
