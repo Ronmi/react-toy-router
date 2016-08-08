@@ -28,5 +28,17 @@ export function LPSpec(l: LocationProvider): void {
             l.go("/test/location/provider/");
             expect(window.location.href).not.to.equal(old);
         });
+
+        it("can detect current path", () => {
+            const lst: string[] = [
+                "/test",
+                "/a/b",
+            ];
+            for (let test of lst) {
+                l.go(test);
+                expect(l.current).to.equals(test);
+                window.history.go(-1);
+            }
+        });
     });
 }

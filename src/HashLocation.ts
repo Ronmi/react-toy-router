@@ -20,6 +20,16 @@ class __HashLocation implements LocationProvider {
 
         return origin + pathname + rest + "#";
     }
+
+    get current(): string {
+        const hash = window.location.hash;
+
+        if (hash === "" || hash[0] !== "#") {
+            return "/";
+        }
+
+        return hash.substring(1);
+    }
 };
 
 export var HashLocation: __HashLocation = new __HashLocation();

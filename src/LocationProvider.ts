@@ -3,4 +3,5 @@ export interface LocationProvider {
     go(path: string): void;
 
     base: string;
+    current: string;
 }

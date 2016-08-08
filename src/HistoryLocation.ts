@@ -15,5 +15,9 @@ export const HistoryLocation: LocationProvider = {
 
     get base(): string {
         return window.location.origin;
+    },
+
+    get current(): string {
+        return window.location.pathname;
     }
 };
