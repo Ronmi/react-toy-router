@@ -1,11 +1,12 @@
 // tear the path apart, processes the .. and .
-export function normalize(path: string, base: string): string[] {
+export function normalize(path: string, base: string): string {
     // strip tailing /
+    const is_dir = path[path.length - 1] === "/";
     while (path[path.length - 1] === "/") path = path.substring(0, path.length - 1);
     while (base[base.length - 1] === "/") base = base.substring(0, base.length - 1);
     let ret: string[] = [""];
     const rooted: boolean = path[0] === "/";
-    if (!rooted) path = base + path;
+    if (!rooted) path = base + "/" + path;
     let cur = 1; // current position of dest array
 
     for (let part of path.split("/")) {
@@ -25,5 +26,5 @@ export function normalize(path: string, base: string): string[] {
         cur++;
     }
 
-    return ret.slice(0, cur);
+    return ret.slice(0, cur).join("/") + (is_dir ? "/" : "");
 }

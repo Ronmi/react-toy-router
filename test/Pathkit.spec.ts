@@ -9,24 +9,16 @@ interface cases {
     [path: string]: string;
 }
 
-function testN(lst: cases) {
+function testN(lst: cases, base: string = "/") {
     for (let path in lst) {
         let wanted = lst[path];
-        expect(p.normalize(path, "/").join("/")).to.deep.equal(wanted);
+        expect(p.normalize(path, base)).to.equal(wanted);
     }
 }
 
 describe("Pathkit", () => {
     describe("normalize()", () => {
-        it("breaks path into array", () => {
-            const lst: cases = {
-                "a": "/a",
-                "a/b": "/a/b",
-                "a/b/c": "/a/b/c",
-            };
-            testN(lst);
-        });
-        it("is empty in first element for rooted path", () => {
+        it("is same for rooted, simple file path", () => {
             const lst: cases = {
                 "/a": "/a",
                 "/a/b": "/a/b",
@@ -34,16 +26,40 @@ describe("Pathkit", () => {
             };
             testN(lst);
         });
-        it("handles multiple-slash correctly", () => {
+        it("is same for rooted, simple dir path", () => {
             const lst: cases = {
-                "a///b": "/a/b",
-                "/a///b": "/a/b",
-                "///a///b": "/a/b",
-                "a///b//": "/a/b",
-                "/a///b//": "/a/b",
-                "///a///b//": "/a/b",
+                "/a/": "/a/",
+                "/a/b/": "/a/b/",
+                "/a/b/c/": "/a/b/c/",
             };
             testN(lst);
+        });
+        it("concates the basement (as dir) for non-rooted, simple file path", () => {
+            const lst: cases = {
+                "a": "/asd/a",
+                "a/b": "/asd/a/b",
+                "a/b/c": "/asd/a/b/c",
+            };
+            testN(lst, "/asd");
+        });
+        it("concates the basement (as dir) for non-rooted, simple dir path", () => {
+            const lst: cases = {
+                "a/": "/asd/a/",
+                "a/b/": "/asd/a/b/",
+                "a/b/c/": "/asd/a/b/c/",
+            };
+            testN(lst, "/asd");
+        });
+        it("strips multiple-slash", () => {
+            const lst: cases = {
+                "a///b": "/asd/a/b",
+                "/a///b": "/a/b",
+                "///a///b": "/a/b",
+                "a///b//": "/asd/a/b/",
+                "/a///b//": "/a/b/",
+                "///a///b//": "/a/b/",
+            };
+            testN(lst, "/asd");
         });
         it("handles .. correctly", () => {
             const lst: cases = {
