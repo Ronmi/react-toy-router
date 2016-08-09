@@ -1,13 +1,14 @@
 import { LocationProvider } from "./LocationProvider";
+import * as p from "./Pathkit";
 
 class __HashLocation implements LocationProvider {
-    go(url: string) {
-        const { origin, pathname, search } = window.location;
-
-        if (/^([^:]+:)?\/\//.test(url)) {
+    go(path: string) {
+        if (/^[^:]*:/.test(path)) {
             return;
         }
-        window.location.href = this.base + url;
+
+        path = p.normalize(path, p.dir(this.current));
+        window.location.hash = "#" + path;
     }
 
     get base(): string {
@@ -18,18 +19,18 @@ class __HashLocation implements LocationProvider {
             rest = search;
         }
 
-        return origin + pathname + rest + "#";
+        return origin + pathname + rest;
     }
 
     get current(): string {
         const hash = window.location.hash;
 
-        if (hash === "" || hash[0] !== "#") {
-            return "/";
+        if (hash[0] === "#") {
+            return hash.substring(1);
         }
 
-        return hash.substring(1);
+        return "/";
     }
 };
 
-export var HashLocation: __HashLocation = new __HashLocation();
+export const HashLocation: __HashLocation = new __HashLocation();

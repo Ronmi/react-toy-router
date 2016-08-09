@@ -1,23 +1,23 @@
 import { LocationProvider } from "./LocationProvider";
+import * as p from "./Pathkit";
 
-export const HistoryLocation: LocationProvider = {
+class __HistoryLocation implements LocationProvider {
     go(path: string) {
-        let info = /^(([^:]+:)?\/\/)?([^:\/]+)?(:[0-9]+)?(\/[^?]*)?(\?[^#]*)?(#.*)?$/.exec(path);
-        let [ match, full_protocol, protocol, host, port, pathname, query, hash ] = info;
-        let check: any[] = [protocol, host, port, query];
-        for (let k in check) {
-            if (check[k] !== undefined) {
-                return;
-            }
+        if (/^[^:]*:/.test(path)) {
+            return;
         }
+
+        path = p.normalize(path, p.dir(this.current));
         window.history.pushState(null, null, path);
-    },
+    }
 
     get base(): string {
         return window.location.origin;
-    },
+    }
 
     get current(): string {
         return window.location.pathname;
     }
-};
+}
+
+export const HistoryLocation: LocationProvider = new __HistoryLocation();

@@ -66,18 +66,45 @@ describe("Pathkit", () => {
                 "a/../1": "/1",
                 "/a/../../../b": "/b",
                 "/a/../2": "/2",
-                "/../a/../3/c/..": "/3",
+                "/../a/../3/c/..": "/3/",
             };
             testN(lst);
         });
         it("handles . correctly", () => {
             const lst: cases = {
                 "./1": "/1",
-                "/b/.": "/b",
+                "/b/.": "/b/",
                 "/a/././.././2": "/2",
-                "/../a/./3/c/.": "/a/3/c",
+                "/../a/./3/c/.": "/a/3/c/",
             };
             testN(lst);
+        });
+    });
+
+    describe("dir()", () => {
+        it("returns /a for /a/b", () => {
+            expect(p.dir("/a/b")).to.equal("/a");
+        });
+        it("returns /a/b for /a/b/", () => {
+            expect(p.dir("/a/b/")).to.equal("/a/b");
+        });
+        it("returns a for a/b", () => {
+            expect(p.dir("a/b")).to.equal("a");
+        });
+        it("returns a/b for a/b/", () => {
+            expect(p.dir("a/b/")).to.equal("a/b");
+        });
+        it("returns / for /a", () => {
+            expect(p.dir("/a")).to.equal("/");
+        });
+        it("returns . for a", () => {
+            expect(p.dir("a")).to.equal(".");
+        });
+        it("returns ../a for ../a/", () => {
+            expect(p.dir("../a/")).to.equal("../a");
+        });
+        it("returns ..////a for ..////a////", () => {
+            expect(p.dir("..////a////")).to.equal("..////a");
         });
     });
 });
