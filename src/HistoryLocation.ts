@@ -2,7 +2,7 @@ import { LocationProvider } from "./LocationProvider";
 import * as _ from "lodash";
 import * as p from "./Pathkit";
 
-class __HistoryLocation implements LocationProvider {
+export class __HistoryLocation implements LocationProvider {
     private callbacks: ((path: string) => void)[];
     private old_path: string;
     constructor() {
