@@ -12,6 +12,10 @@ export interface RouteState {
 
 export type ArgType = number | string | boolean;
 
+export interface RoutableProps {
+    routerArgs?: ArgType[];
+}
+
 interface position {
     pos: number;
     c: (str: string) => ArgType;
@@ -19,6 +23,7 @@ interface position {
 
 export class Route extends React.Component<RouteProps, RouteState> {
     private regexp: RegExp;
+    private childNode: React.ReactElement<any>;
     private _args: ArgType[];
     private _argPos: position[];
     constructor(props?: RouteProps, context?: any) {
@@ -29,6 +34,7 @@ export class Route extends React.Component<RouteProps, RouteState> {
         this._args = [];
         this._argPos = [];
         this.buildRegexp();
+	this.childNode = React.Children.only(this.props.children) as React.ReactElement<any>;
     }
 
     componentWillMount() {
@@ -108,7 +114,10 @@ export class Route extends React.Component<RouteProps, RouteState> {
 
     render() {
         if (this.state.show) {
-            return React.Children.only(this.props.children) as React.ReactElement<any>;
+	    const e = this.childNode;
+	    if (this.args.length > 0)
+		return <e.type {...e.props} routerArgs={this.args} />;
+	    return e;
         }
 
         return null;
