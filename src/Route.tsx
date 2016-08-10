@@ -17,7 +17,7 @@ interface position {
     c: (str: string) => ArgType;
 }
 
-export default class Route extends React.Component<RouteProps, RouteState> {
+export class Route extends React.Component<RouteProps, RouteState> {
     private regexp: RegExp;
     private _args: ArgType[];
     private _argPos: position[];

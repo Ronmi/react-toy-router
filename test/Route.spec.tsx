@@ -3,7 +3,7 @@
 
 import * as React from "react";
 import { shallow } from "enzyme";
-import Route from "../src/Route";
+import { Route } from "../src/Route";
 import { HistoryLocation as l } from "../src/HistoryLocation";
 
 const expect = chai.expect;
@@ -88,7 +88,7 @@ describe("<Route />", () => {
 		const args = (wrapper.instance() as Route).args;
 		expect(args).to.deep.equal([bool]);
 	    }
-	    
+
 	    it("accepts false as false", test.bind({}, "false", false));
 	    it("accepts f as false", test.bind({}, "f", false));
 	    it("accepts n as false", test.bind({}, "n", false));
