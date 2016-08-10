@@ -1,14 +1,17 @@
+var LodashModuleReplacementPlugin = require('lodash-webpack-plugin');
 var webpack = require("webpack");
 const pkg = require("./package.json");
 module.exports = {
-  entry: "./src/ToyRouter.tsx",
+  entry: "./index.ts",
 
   output: {
-    filename: "ToyRouter.js",
+    filename: "index.js",
     path: "./dist"
   },
 
   plugins: [
+    new LodashModuleReplacementPlugin,
+    new webpack.optimize.OccurrenceOrderPlugin,
   ],
 
   // Enable sourcemaps for debugging webpack's output.
@@ -27,6 +30,7 @@ module.exports = {
 	  "babel-loader?presets[]=es2015&plugins[]=lodash",
 	  "ts-loader",
 	],
+	exclude: /build|test|node_modules/,
       },
       {
 	test: /\.js/,
@@ -52,5 +56,7 @@ module.exports = {
   // This is important because it allows us to avoid bundling all of our
   // dependencies, which allows browsers to cache those libraries between builds.
   externals: [
+    "react",
+    "react-dom",
   ],
 };

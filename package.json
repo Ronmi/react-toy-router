@@ -2,7 +2,7 @@
   "name": "react-toy-router",
   "version": "0.0.1",
   "description": "just toy",
-  "main": "dist/ToyRouter.js",
+  "main": "dist/index.js",
   "scripts": {
     "postinstall": "typings install",
     "typings": "typings",
@@ -10,7 +10,7 @@
     "webpack:w": "webpack -w",
     "webpack:m": "webpack --config webpack.minify.js",
     "server": "browser-sync start -c bs-config.js",
-    "build": "tsc && npm run webpack:m",
+    "build": "rm -fr build/* dist/* && tsc -d && npm run webpack && npm run webpack:m",
     "start": "tsc && webpack && concurrently \"npm run webpack:w\" \"npm run server\"",
     "tsc": "tsc",
     "tsc:w": "tsc -w",

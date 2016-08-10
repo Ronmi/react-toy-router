@@ -1,7 +1,7 @@
 var webpack = require("webpack");
 var conf = require("./webpack.config.js");
 
-conf.output.filename = "ToyRouter.min.js";
+conf.output.filename = "index.min.js";
 
 conf.plugins.push(new webpack.optimize.UglifyJsPlugin({
   compress: false,
