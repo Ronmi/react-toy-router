@@ -1,5 +1,5 @@
 import { LocationProvider } from "./LocationProvider";
-import * as _ from "lodash";
+import { union } from "./tools";
 import * as p from "./Pathkit";
 
 export class __HistoryLocation implements LocationProvider {
@@ -35,7 +35,7 @@ export class __HistoryLocation implements LocationProvider {
     }
 
     senpai(notice: (me: string) => void): void {
-        this.callbacks = _.union(this.callbacks, [notice]);
+        this.callbacks = union(this.callbacks, [notice]);
     }
 
     get base(): string {
